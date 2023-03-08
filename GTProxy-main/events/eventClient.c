@@ -61,7 +61,7 @@ void clientReceive(ENetEvent event, ENetPeer* clientPeer, ENetPeer* serverPeer) 
                 printf("[GTProxy] Spoofing Login info...\n");
                 loginInfo[findArray(loginInfo, "meta|")] = CatchMessage("meta|%s", currentInfo.meta);
                 loginInfo[findArray(loginInfo, "wk|")] = CatchMessage("wk|NONE0", currentInfo.meta);
-                loginInfo[findArray(loginInfo, "rid|")] = CatchMessage("rid|01C343749A23765B0260F89600D12060", currentInfo.rid);
+                loginInfo[findArray(loginInfo, "rid|")] = CatchMessage("rid|01B8E1A2725D8D2A092D44324833A028", currentInfo.rid);
                 loginInfo[findArray(loginInfo, "mac|")] = CatchMessage("mac|02:00:00:00:00:00", currentInfo.mac);
 
                 char* resultSpoofed = arrayJoin(loginInfo, "\n");
