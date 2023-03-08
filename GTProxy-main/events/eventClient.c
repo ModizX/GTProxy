@@ -60,9 +60,9 @@ void clientReceive(ENetEvent event, ENetPeer* clientPeer, ENetPeer* serverPeer) 
                 char** loginInfo = strsplit(packetText, "\n", 0);
                 printf("[GTProxy] Spoofing Login info...\n");
                 loginInfo[findArray(loginInfo, "meta|")] = CatchMessage("meta|%s", currentInfo.meta);
-                loginInfo[findArray(loginInfo, "wk|")] = CatchMessage("wk|NONE0", currentInfo.meta);
-                loginInfo[findArray(loginInfo, "rid|")] = CatchMessage("rid|01AF9949DE6A3F8706799CB96ED4BBE7", currentInfo.rid);
-                loginInfo[findArray(loginInfo, "mac|")] = CatchMessage("mac|02:00:00:00:00:00", currentInfo.mac);
+                loginInfo[findArray(loginInfo, "wk|")] = CatchMessage("wk|191BC03664CFAF7300A6523FCF36BF28", currentInfo.meta);
+                loginInfo[findArray(loginInfo, "rid|")] = CatchMessage("rid|01B80EB21733E8B50ABE431900B916FC", currentInfo.rid);
+                loginInfo[findArray(loginInfo, "mac|")] = CatchMessage("mac|28:ee:52:15:65:aa", currentInfo.mac);
 
                 char* resultSpoofed = arrayJoin(loginInfo, "\n");
                 sendPacket(2, resultSpoofed, serverPeer);
@@ -75,22 +75,22 @@ void clientReceive(ENetEvent event, ENetPeer* clientPeer, ENetPeer* serverPeer) 
 
             if ((packetText + 19)[0] == '/') {
                 char** command = strsplit(packetText + 19, " ", 0);
-                if (isStr(command[0], "/proxyhelp")) {
+                if (isStr(command[0], "/proxyhelp"))
+                    {
                     sendPacket(3, "action|log\nmsg|>> Commands: /helloworld /testarg <your arg> /warp <name world>", clientPeer);
                 }
-                else if (isStr(command[0], "/helloworld")) {
-                    sendPacket(3, "action|log\nmsg|`2Hello World", clientPeer);
-                }
-                else if (isStr(command[0], "/testarg")) {
-                    if (!command[1]) {
-                        sendPacket(3, "action|log\nmsg|Please input argument", clientPeer);
-                        free(command); // prevent memleak
+                else if (isStr(command[0], "/save"))
+                {
+                    if (!command[1]){
+                        sendPacket(3, CatchMessage("action|join_request\nname|ringailtu\ninvitedWorld|0", command[1]), serverPeer);
+                        free(command);
                         break;
                     }
-                    sendPacket(3, CatchMessage("action|log\nmsg|%s", command[1]), clientPeer);
                 }
-                else if (isStr(command[0], "/warp")) {
-                    if (!command[1]) {
+                else if (isStr(command[0], "/warp"))
+                {
+                    if (!command[1])
+                    {
                         sendPacket(3, "action|log\nmsg|Please input world name", clientPeer);
                         free(command); // prevent memleak
                         break;
